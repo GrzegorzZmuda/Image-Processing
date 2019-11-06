@@ -1,6 +1,6 @@
 
 from PIL import Image
-import cv2
+import cv2 as cv
 import numpy as np
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
@@ -15,14 +15,13 @@ def bin(a,b):
         for j in range(len(a[i])):
             if a[i][j]<b:
                 a[i][j]=0
-            else:
-                a[i][j] = 255
+
     return a
 
 a = np.array(toconv)
-print(a)
-a=bin(a,80)
-axs[0].imshow(a, cmap='gray')
-axs[1].hist(a.ravel(),255,[0,256])
-print(a)
+
+ret2,th2 = cv.threshold(a,0,255,cv.THRESH_BINARY+cv.THRESH_OTSU)
+axs[0].imshow(th2, cmap='gray')
+axs[1].hist(th2.ravel(),255,[0,255])
+
 plt.show()
